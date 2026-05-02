@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAV - Bejelentkezés</title>
-    <!-- Fontok és ikonok -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>NightLite MTA - NAV Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 100%);
+            background-color: #0d0d0d;
+            background-image: radial-gradient(circle at center, #151515 0%, #0d0d0d 100%);
             color: white;
             margin: 0;
             display: flex;
@@ -23,50 +22,54 @@
 
         .header-logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .header-logo h1 {
             margin: 0;
-            font-size: 28px;
-            letter-spacing: 1px;
+            font-size: 32px;
+            letter-spacing: -1px;
         }
 
-        .header-logo .see { color: white; font-weight: 400; }
-        .header-logo .mta { color: #00a86b; font-weight: 800; }
+        /* NightLite MTA színek */
+        .header-logo .night { color: white; font-weight: 300; }
+        .header-logo .lite { color: #00a86b; font-weight: 800; text-transform: uppercase; }
+        
         .header-logo .nav-text {
             display: block;
             color: #00a86b;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            margin-top: 5px;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
         }
 
         .login-card {
-            background-color: #1a1a1a;
-            border: 1px solid #2d2d2d;
-            padding: 40px;
-            border-radius: 20px;
+            background-color: #161616;
+            border: 1px solid #222;
+            padding: 45px 40px;
+            border-radius: 24px;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            max-width: 380px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
             text-align: center;
         }
 
         .user-icon {
-            background-color: #122a22;
-            width: 70px;
-            height: 70px;
+            background-color: #0a2018;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 25px auto;
             color: #00a86b;
-            font-size: 30px;
+            font-size: 28px;
+            border: 1px solid #143a2d;
         }
 
-        h2 { margin-bottom: 30px; font-weight: 600; font-size: 24px; }
+        h2 { margin-bottom: 35px; font-weight: 600; font-size: 26px; color: #eee; }
 
         .input-group {
             position: relative;
@@ -75,75 +78,89 @@
 
         .input-group i {
             position: absolute;
-            left: 15px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
-            color: #888;
+            color: #555;
+            font-size: 14px;
         }
 
         input {
             width: 100%;
-            padding: 15px 15px 15px 45px;
-            background-color: #121212;
-            border: 1px solid #333;
-            border-radius: 10px;
+            padding: 16px 16px 16px 50px;
+            background-color: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
             color: white;
             box-sizing: border-box;
-            font-size: 16px;
-            transition: border 0.3s;
+            font-size: 15px;
+            transition: all 0.3s ease;
         }
 
         input:focus {
             border-color: #00a86b;
+            background-color: #121212;
             outline: none;
+            box-shadow: 0 0 10px rgba(0, 168, 107, 0.1);
         }
 
         .login-btn {
             width: 100%;
-            padding: 15px;
-            background-color: #074d34;
-            color: #00a86b;
+            padding: 16px;
+            background-color: #0a3d2b; /* Sötétzöld alap */
+            color: #00ffa2; /* Világító zöld szöveg */
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            margin-top: 25px;
+            transition: all 0.3s ease;
         }
 
         .login-btn:hover {
-            background-color: #0a6344;
-            color: #00ffa2;
+            background-color: #0e523a;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .footer-info {
-            margin-top: 25px;
+            margin-top: 30px;
             font-size: 11px;
-            color: #666;
-            line-height: 1.6;
+            color: #555;
+            line-height: 1.5;
         }
 
-        .footer-info a { color: #999; text-decoration: underline; }
+        .footer-info a { color: #888; text-decoration: none; border-bottom: 1px solid #444; }
 
         .forgot-pass {
             display: block;
-            margin-top: 15px;
+            margin-top: 18px;
             font-size: 12px;
-            color: #999;
-            text-decoration: underline;
+            color: #777;
+            text-decoration: none;
             cursor: pointer;
+            transition: color 0.2s;
         }
+        .forgot-pass:hover { color: #aaa; }
 
-        /* Sikeres belépés utáni rész */
-        #content { display: none; text-align: center; padding: 50px; }
+        /* Belső felület */
+        #content { 
+            display: none; 
+            width: 90%; 
+            max-width: 900px; 
+            background: #161616; 
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid #222;
+        }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <div class="header-logo">
-            <h1><span class="see">See</span><span class="mta">MTA</span></h1>
+            <h1><span class="night">Night</span><span class="lite">Lite</span></h1>
             <span class="nav-text">Nemzeti Adó- és Vámhivatal</span>
         </div>
 
@@ -155,7 +172,7 @@
             
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" id="username" placeholder="Felhasználónév">
+                <input type="text" id="username" placeholder="Felhasználónév" autocomplete="off">
             </div>
 
             <div class="input-group">
@@ -168,34 +185,45 @@
             <div class="footer-info">
                 Ez az oldal a <b>reCAPTCHA</b> védelme alatt áll.<br>
                 A Google <a href="#">adatvédelmi irányelvei</a> és <a href="#">szolgáltatási feltételei</a> vonatkoznak rá.
-                <span class="forgot-pass">Elfelejtett felhasználónév / jelszó?</span>
+                <a class="forgot-pass">Elfelejtett felhasználónév / jelszó?</a>
             </div>
         </div>
     </div>
 
-    <!-- IDE JÖN A NAV BELSŐ TARTALMA -->
+    <!-- BELSŐ TARTALOM HELYE -->
     <div id="content">
-        <h1 style="color: #00a86b;">Sikeres belépés!</h1>
-        <p>Üdvözöljük a NAV belső felületén.</p>
+        <h1 style="color: #00a86b;">NightLite NAV - Belső Rendszer</h1>
+        <p>Sikeresen bejelentkeztél, Noel!</p>
+        <div style="text-align: left; background: #0f0f0f; padding: 20px; border-radius: 12px; margin: 20px 0;">
+            <p>• Aktuális körözések: 12 db</p>
+            <p>• Szolgálatban lévő egységek: 4 egység</p>
+        </div>
         <button class="login-btn" style="max-width: 200px;" onclick="location.reload()">Kijelentkezés</button>
     </div>
 
     <script>
-        // --- BEÁLLÍTÁSOK ---
-        const FIX_USER = "NAV_Noel"; // Ezt írd át amire akarod
-        const FIX_PASS = "nightlite2026"; // EGYENLŐRE EZ A FIX JELSZÓ
+        // --- FIX ADATOK (Bármire átírhatod) ---
+        const USER = "NAV_Noel";
+        const PASS = "nightlite2026";
 
         function checkLogin() {
             const userIn = document.getElementById('username').value;
             const passIn = document.getElementById('password').value;
 
-            if(userIn === FIX_USER && passIn === FIX_PASS) {
+            if(userIn === USER && passIn === PASS) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
             } else {
-                alert("Hibás felhasználónév vagy jelszó!");
+                alert("Hiba: Érvénytelen adatok!");
             }
         }
+
+        // Enter billentyűre is küldje el
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkLogin();
+            }
+        });
     </script>
 </body>
 </html>
