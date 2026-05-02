@@ -1,99 +1,201 @@
-+<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAV - Nightlite MTA V4</title>
+    <title>NAV - Bejelentkezés</title>
+    <!-- Fontok és ikonok -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a2e; color: white; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-    .card { background: #16213e; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 350px; text-align: center; border-top: 5px solid #e94560; display: flex; flex-direction: column; align-items: center; }
-    img { width: 100px; height: auto; margin-bottom: 15px; }
-    h1 { font-size: 22px; margin: 10px 0; color: #e94560; }
-    p { font-size: 14px; margin-bottom: 20px; color: #ccc; }
-    input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: none; background: #0f3460; color: white; box-sizing: border-box; outline: none; }
-    button { width: 100%; padding: 14px; background: #e94560; border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-    button:hover { background: #c62a48; }
-    #titkos { display: none; width: 100%; max-width: 800px; background: #16213e; padding: 30px; border-radius: 15px; border: 1px solid #0f3460; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f0f;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 100%);
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-logo h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .header-logo .see { color: white; font-weight: 400; }
+        .header-logo .mta { color: #00a86b; font-weight: 800; }
+        .header-logo .nav-text {
+            display: block;
+            color: #00a86b;
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .login-card {
+            background-color: #1a1a1a;
+            border: 1px solid #2d2d2d;
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .user-icon {
+            background-color: #122a22;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            color: #00a86b;
+            font-size: 30px;
+        }
+
+        h2 { margin-bottom: 30px; font-weight: 600; font-size: 24px; }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background-color: #121212;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #00a86b;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #074d34;
+            color: #00a86b;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #0a6344;
+            color: #00ffa2;
+        }
+
+        .footer-info {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer-info a { color: #999; text-decoration: underline; }
+
+        .forgot-pass {
+            display: block;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Sikeres belépés utáni rész */
+        #content { display: none; text-align: center; padding: 50px; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN PANEL -->
-    <div id="login-panel" class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Nemzeti_Ad%C3%B3-_%C3%A9s_V%C3%A1mhivatal_log%C3%B3ja.png" alt="NAV">
-        <h1>NAV BELÉPÉS</h1>
-        <p>Nightlite MTA V4 - Belső rendszer</p>
-        <input type="email" id="email" placeholder="E-mail cím">
-        <input type="password" id="pass" placeholder="Jelszó">
-        <button onclick="login()">BEJELENTKEZÉS</button>
-        <p id="error-msg" style="color: #ff4d4d; font-size: 14px; margin-top: 10px;"></p>
-    </div>
-
-    <!-- BELSŐ TARTALOM (Csak belépés után) -->
-    <div id="titkos">
-        <div class="nav-menu">
-            <span>Üdvözöljük, <b id="user-email"></b>!</span>
-            <button class="logout-btn" onclick="logout()">Kijelentkezés</button>
+    <div id="login-screen">
+        <div class="header-logo">
+            <h1><span class="see">See</span><span class="mta">MTA</span></h1>
+            <span class="nav-text">Nemzeti Adó- és Vámhivatal</span>
         </div>
-        <h2>NAV - Vezérlőpult</h2>
-        <hr border="0" height="1px" background="#333">
-        <div style="text-align: left;">
-            <h3>Aktuális belső infók:</h3>
-            <ul>
-                <li>Heti cél: 200 traffipax ellenőrzés.</li>
-                <li>BTK frissítés várható a hétvégén.</li>
-                <li>Mindenki töltse ki a jelenléti ívet!</li>
-            </ul>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-                <tr style="background: #e94560;">
-                    <th style="padding: 10px;">Név</th>
-                    <th>Rendfokozat</th>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border-bottom: 1px solid #333;">Noel</td>
-                    <td style="border-bottom: 1px solid #333;">Leader</td>
-                </tr>
-            </table>
+
+        <div class="login-card">
+            <div class="user-icon">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <h2>Üdvözlünk!</h2>
+            
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="username" placeholder="Felhasználónév">
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Jelszó">
+            </div>
+
+            <button class="login-btn" onclick="checkLogin()">Bejelentkezés</button>
+
+            <div class="footer-info">
+                Ez az oldal a <b>reCAPTCHA</b> védelme alatt áll.<br>
+                A Google <a href="#">adatvédelmi irányelvei</a> és <a href="#">szolgáltatási feltételei</a> vonatkoznak rá.
+                <span class="forgot-pass">Elfelejtett felhasználónév / jelszó?</span>
+            </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    <!-- IDE JÖN A NAV BELSŐ TARTALMA -->
+    <div id="content">
+        <h1 style="color: #00a86b;">Sikeres belépés!</h1>
+        <p>Üdvözöljük a NAV belső felületén.</p>
+        <button class="login-btn" style="max-width: 200px;" onclick="location.reload()">Kijelentkezés</button>
+    </div>
 
-        // IDE MÁSOLD A SAJÁT FIREBASE CONFIGODAT!
-        const firebaseConfig = {
-          apiKey: "AIzaSyCcjGv0ZmZf6_v24cu9JJJ7bgKQNw4kiDM",
-          authDomain: "nightlite-nav-web.firebaseapp.com",
-          projectId: "nightlite-nav-web",
-          storageBucket: "nightlite-nav-web.firebasestorage.app",
-          messagingSenderId: "860113550259",
-          appId: "1:860113550259:web:f0629d33bb7348420069c6"
-        };
+    <script>
+        // --- BEÁLLÍTÁSOK ---
+        const FIX_USER = "NAV_Noel"; // Ezt írd át amire akarod
+        const FIX_PASS = "nightlite2026"; // EGYENLŐRE EZ A FIX JELSZÓ
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        function checkLogin() {
+            const userIn = document.getElementById('username').value;
+            const passIn = document.getElementById('password').value;
 
-        window.login = () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(err => {
-                document.getElementById('error-msg').innerText = "Hiba: Rossz email vagy jelszó!";
-            });
-        };
-
-        window.logout = () => signOut(auth);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-panel').style.display = 'none';
-                document.getElementById('titkos').style.display = 'block';
-                document.getElementById('user-email').innerText = user.email;
+            if(userIn === FIX_USER && passIn === FIX_PASS) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
             } else {
-                document.getElementById('login-panel').style.display = 'flex';
-                document.getElementById('titkos').style.display = 'none';
+                alert("Hibás felhasználónév vagy jelszó!");
             }
-        });
+        }
     </script>
 </body>
 </html>
